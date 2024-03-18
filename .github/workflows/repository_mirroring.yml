@@ -1,0 +1,17 @@
+name: Synchronisation du Dépôt
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror_repository:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Synchroniser le Dépôt avec Epitech
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          source-repository: ${{ github.repository }}
+          destination-repository: epitech/bootstraps
+          github-token: ${{ secrets.GITHUB_TOKEN }}
