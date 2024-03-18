@@ -17,5 +17,7 @@ jobs:
       - name: Synchroniser le Dépôt avec Epitech
         uses: pixta-dev/repository-mirroring-action@main
         with:
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          target_repo_url: git@github.com:EpitechPromo2028/B-DOP-200-MPL-2-1-chocolatine-loann.picard-blardone.git
+          target_repo_url:
+            git@github.com:EpitechPromo2028/B-DOP-200-MPL-2-1-chocolatine-loann.picard-blardone.git
+          ssh_private_key:
+            ${{ secrets.SSH_PRIVATE_KEY }}
