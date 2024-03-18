@@ -1,0 +1,19 @@
+name: repo size
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  fetch_files_and_display_size:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Display Branch Name
+        run: echo "Branch: $GITHUB_REF"
+
+      - name: Calculate Repository Size
+        run: du -skh --exclude=".git" .
