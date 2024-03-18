@@ -1,0 +1,13 @@
+name: what time is it ?
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print_time:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Current Time
+        run: date
