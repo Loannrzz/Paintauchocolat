@@ -1,4 +1,4 @@
-name: Synchronisation du Dépôt
+name: Synchronisation des repo
 
 on:
   push:
@@ -9,7 +9,10 @@ jobs:
   mirror_repository:
     runs-on: ubuntu-latest
     steps:
-      - name: Synchroniser le Dépôt avec Epitech
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Synchroniser le repo avec Epitech
         uses: pixta-dev/repository-mirroring-action@v1
         with:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
