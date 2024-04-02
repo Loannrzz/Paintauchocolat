@@ -15,7 +15,7 @@
 #include "./shell.h"
 #include "stdio.h"
 
-// Forward declaration of t_shell
+// Forward declaration of t_shellj
 int my_strclen(const char *str, const char *delimiters);
 void my_putstr(char const *str);
 void my_putchar(char c);
