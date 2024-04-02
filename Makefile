@@ -35,7 +35,8 @@ $(NAME): $(OBJ)
 
 tests_run: $(OBJ) $(TEST_OBJ)
 	make -C $(LIB)
-	$(CC) $(OBJ) $(TEST_OBJ) -o $(TEST_NAME) -L$(LIB) -lmy -lcriterion --coverage
+	$(CC) $(OBJ) $(TEST_OBJ) -o $(TEST_NAME) -L$(LIB) \
+	-lmy -lcriterion --coverage
 
 clean:
 	make clean -C $(LIB)
