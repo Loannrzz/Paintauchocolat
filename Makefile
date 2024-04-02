@@ -15,11 +15,17 @@ CPPFLAGS = -I./include
 
 LIB = ./lib
 
-SRC := $(wildcard $(shell find $(SRC_DIRS) -name '*.c'))
+SRC := $(wildcard $(shell find $(SRC_DIRS) -name '*.c' ! -path "./tests/*"))
 
 OBJ = $(SRC:.c=.o)
 
 NAME = mysh
+
+TEST_SRC := $(wildcard $(shell find ./tests -name '*.c'))
+
+TEST_OBJ = $(TEST_SRC:.c=.o)
+
+TEST_NAME = unit_tests
 
 all: $(NAME)
 
@@ -27,18 +33,23 @@ $(NAME): $(OBJ)
 	make -C $(LIB)
 	$(CC) $(OBJ) -o $(NAME) -L$(LIB) -lmy
 
+tests_run: $(OBJ) $(TEST_OBJ)
+	make -C $(LIB)
+	$(CC) $(OBJ) $(TEST_OBJ) -o $(TEST_NAME) -L$(LIB) -lmy -lcriterion --coverage
+
 clean:
 	make clean -C $(LIB)
 	$(RM) $(OBJ)
-	$(RM) $(T_NAME)
+	$(RM) $(TEST_OBJ)
 
 fclean: clean
 	make fclean -C $(LIB)
 	$(RM) $(NAME)
+	$(RM) $(TEST_NAME)
 
 re: fclean all
 
-
+.PHONY: all clean fclean re tests_run
 get_file_size = $(shell du -m --apparent-size $1 | awk '{printf "%.1f", $$1}')
 get_file_owner = $(shell stat -c %U $1)
 get_file_count_src = $(shell expr $(shell find ./src -type f | wc -l) / 2)
