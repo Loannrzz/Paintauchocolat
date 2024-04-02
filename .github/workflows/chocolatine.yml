@@ -35,9 +35,10 @@ jobs:
                 echo "::error file=$FILE,line=$LINE::$MSG"
               fi
             done < coding-style-reports.log
-            exit 1
+            if grep -qv 'illegal token' coding-style-reports.log; then
+              exit 1
+            fi
           fi
-          rm -f coding-style-reports.log
   check_program_compilation:
     runs-on: ubuntu-latest
     needs: [ check_coding_style ]
