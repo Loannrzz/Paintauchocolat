@@ -28,13 +28,15 @@ jobs:
           if [ -s coding-style-reports.log ]; then
             while IFS= read -r line
             do
-              FILE=$(echo $line | cut -d':' -f1)
-              LINE=$(echo $line | cut -d':' -f2)
-              MSG=$(echo $line | cut -d':' -f3-)
-              echo "::error file=$FILE,line=$LINE::$MSG"
-             done < coding-style-reports.log
-             exit 1
-            fi
+              if [[ $line != *"illegal token"* ]]; then
+                FILE=$(echo $line | cut -d':' -f1)
+                LINE=$(echo $line | cut -d':' -f2)
+                MSG=$(echo $line | cut -d':' -f3-)
+                echo "::error file=$FILE,line=$LINE::$MSG"
+              fi
+            done < coding-style-reports.log
+            exit 1
+          fi
           rm -f coding-style-reports.log
   check_program_compilation:
     runs-on: ubuntu-latest
