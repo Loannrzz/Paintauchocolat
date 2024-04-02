@@ -7,51 +7,67 @@
 
 #pragma once
 
-#include "my.h"
-#include "command.h"
+#include <fcntl.h>
 #include <stdbool.h>
-#include "unistd.h"
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include "command.h"
+#include "my.h"
 
-typedef struct node_s { // Arbre binaire
-    struct node_s *next; // Fils droit
-    struct node_s *prev; // Fils gauche
-    char **text; // Commande
-    char *str; // Commande
-    int len; // Longueur de la commande
-}node_t;
+typedef struct node_s {
+    struct node_s *next;
+    struct node_s *prev;
+    char **text;
+    char *str;
+    int len;
+} node_t;
 
 typedef struct list_s {
-    int nb_nodes; // Nombre de noeuds
-    node_t *premier; // Premier noeud
-    node_t *dernier; // Dernier noeud
-    void (*add)(struct list_s *, node_t *); // Ajouter un noeud
-    node_t *(*new)(char **, int); // Créer un noeud
-    void (*supp)(struct list_s *, node_t *); // Supprimer un noeud
-    int (*size)(struct list_s *); // Taille de la liste
+    int nb_nodes;
+    node_t *first;
+    node_t *last;
+    void (*add)(struct list_s *, node_t *);
+    node_t *(*new)(char **, int);
+    void (*pop)(struct list_s *, node_t *);
 } list_t;
 
+list_t *new_liked_list(void);
+
 typedef struct heap_s {
-    list_t **array; // Tableau de listes
-    int size; // Taille
-    void (*add)(struct heap_s *, list_t *); // Ajouter une liste
-    void (*supp)(struct heap_s *); // Supprimer une liste
-}heap_t;
+    list_t **array;
+    int capacity;
+    int size;
+    void (*add)(struct heap_s *, list_t *);
+    void (*pop)(struct heap_s *);
+} heap_t;
 
-typedef struct myshell_s { // Structure principale
-    heap_t commands; // Tas de commandes
-    list_t *list_env; // Liste des variables d'environnement
-    char **env; // Variables d'environnement
-    char *oldpwd; // Ancien répertoire
-    char *home; // Répertoire home
-    char **path; // Chemin
-    int error; // Erreur
-    bool exit; // Sortie
-}myshell_t;
+heap_t new_heap(int capacity);
 
-typedef struct verify_command_dev_s {
-    char *name; // Nom de la commande
-    int (*ptr)(myshell_t *, node_t *); // Pointeur de fonction
-}verify_command_dev_t;
+typedef struct mysh_s {
+    heap_t commands;
+    list_t *list_env;
+    char **env;
+    char *oldpwd;
+    char *home;
+    char **path;
+    int error;
+    bool exit;
+} mysh_t;
 
-void my_env_to(myshell_t *my_shell);
-heap_t new_command(myshell_t *my_shell);
+typedef struct built_in_t {
+    char *name;
+    int (*ptr)(mysh_t *, node_t *);
+} built_in_t;
+
+void my_env_to(mysh_t *mysh);
+heap_t new_command(mysh_t *mysh);
+
+typedef struct ReplaceParams {
+    char *input;
+    char *replace;
+    char *result;
+    int to_findlen;
+} ReplaceParams;

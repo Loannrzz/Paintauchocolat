@@ -9,6 +9,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#define INT_MAX 2147483647
+#define INT_MIN -2147483648
+
 int flags(char name_flag);
 int ls_classic(void);
 int ls_flags_a(void);

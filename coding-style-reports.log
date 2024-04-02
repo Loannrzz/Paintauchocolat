@@ -4,9 +4,10 @@
 ./lib/my/my_concat.c:22: MINOR:C-L6
 ./lib/my/my_concat.c:37: MAJOR:C-L1
 ./lib/my/my_concat.c:41: MAJOR:C-L1
-./lib/my/my_concat.c:45: MAJOR:C-L1
 ./lib/my/my_concat.c:48: MAJOR:C-F4
 ./lib/my/my_concat.c:49: MAJOR:C-F4
+./lib/my/my_concat.c:50: MAJOR:C-F4
+./lib/my/my_concat.c:51: MAJOR:C-F4
 ./lib/my/my_str_to_word_array.c:12: MINOR:C-L4
 ./lib/my/my_str_to_word_array.c:15: MINOR:C-L6
 ./lib/my/my_str_to_word_array.c:16: MINOR:C-F8
@@ -57,7 +58,6 @@
 ./lib/my/my_strchr.c:21: MINOR:C-L6
 ./lib/my/my_strchr.c:23: INFO:C-A3
 ./lib/my/my_strclen.c:13: MINOR:C-L6
-./mysh:1: MAJOR:C-O1
 ./src/initialize/initialize.c:13: MAJOR:C-L5
 ./src/initialize/initialize_env.c:13: MAJOR:C-L5
 ./src/initialize/initialize_env.c:14: MINOR:C-L6
